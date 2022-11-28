@@ -51,7 +51,7 @@
 
     <title>Starchaser Forum</title>
   </head>
-  <body style="background-color: rgba(16, 14, 14, 0.466)">
+  <body style="background-color: rgba(16, 14, 14, 0.466)" onload="resolve_forum_sections()">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -125,14 +125,14 @@
       <h3 class="text-light" style="text-align: center; margin-bottom: 0">
         Starchaser Forum
       </h3>
-      <hr class="m-0" />
     </section>
 
-    <section
+    <!-- <section
       class="jumbotron bg-dark text-light py-4 m-0"
       style="border-radius: 0"
-      id="SECTIONS"
-    >
+    > -->
+    <div id="SECTIONS"></div>
+    <!-- </section> -->
   </body>
   <footer align="center">Starchaser version: 0.0.0</footer>
 </html>
