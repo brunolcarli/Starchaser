@@ -14,7 +14,7 @@ function resolve_forum_sections(){
     get_forum_sections().then(sections => {
         console.log(sections);
         let sections_listing = document.getElementById('SECTIONS');
-        let card = '<hr /><h3 align="center">Sections</h3><hr />';
+        let card = '';
         for (let i in sections){
             var title = sections[i]['name'];
             var description = sections[i]['description'];
