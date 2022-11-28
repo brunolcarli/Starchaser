@@ -17,8 +17,7 @@ correct formats to be displayed in this website.
 ///////////////////////////////////
 
 
-// const URL = '';
-const URL = 'http://localhost:9099/graphql/';
+const URL = 'https://ogamepvtforum.brunolcarli.repl.co/graphql/';
 
 
 ///////////////////////////////////
