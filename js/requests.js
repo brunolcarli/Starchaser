@@ -67,7 +67,7 @@ function get_forum_sections(){
 
 
 function get_section_data(section_id){
-    const payload = `{"query": "query { section(id: ${section_id}){ name description threads { id title content createdBy{ id username } openDate lastPostDatetime closed  } } }"}`;
+    const payload = `{"query": "query { section(id: ${section_id}){ name description threads { id title content createdBy{ id username avatar} openDate lastPostDatetime closed  } } }"}`;
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
@@ -81,7 +81,7 @@ function get_section_data(section_id){
 
 
 function get_thread_data(thread_id){
-    const payload = `{"query": "query { thread(id: ${thread_id}){ id title content createdBy {id username} openDate posts {user {id username} content datetime} } }"}`;
+    const payload = `{"query": "query { thread(id: ${thread_id}){ id title content createdBy {id username avatar} openDate posts {user {id username avatar} content datetime} } }"}`;
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
@@ -90,5 +90,42 @@ function get_thread_data(thread_id){
     })
     .catch(err => {
         console.error(err);
+    });
+}
+
+
+
+///////////////////////////////////
+//
+//     Authorization requests
+//
+///////////////////////////////////
+
+
+function login_mutation(username, password){
+    const query = `logIn(username: \\\"${username}\\\" password: \\\"${password}\\\")`;
+    const payload = '{"query": "mutation{' + query + '{ token }}"}';
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['logIn'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+function refresh_user_token(token){
+    const query = `refreshUserToken(token: \\\"${token}\\\")`;
+    const payload = '{"query": "mutation{' + query + '{ token }}"}';
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['refreshUserToken'];
+    })
+    .catch(err => {
+      console.error(err);
     });
 }

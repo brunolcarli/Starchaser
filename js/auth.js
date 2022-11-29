@@ -9,7 +9,7 @@ function refresh_session(username, token){
 function is_logged(){
     var user_data = JSON.parse(localStorage.getItem('USER_TOKEN'));
     if (!user_data){
-        alert('Sessão expirada! Faça login no sistema para continuar nesta página.');
+        alert('Session expired!');
         localStorage.clear();
         window.location.href = '../index.html';
         return
@@ -27,13 +27,13 @@ function log_in(){
     return login_mutation(username, password).then(data => {
         let token = data['token'];
         if (!token){
-            alert('Usuário ou senha incorretos!');
+            alert('Wrong username or password!');
             localStorage.clear();
             window.location.href = 'index.html';
             return
         }
         refresh_session(username, token);
-        alert(`Login autenticado com sucesso para usuário ${username}`);
+        alert(`Authenticated for user ${username}`);
         window.location.href = 'index.html';
     });
 }
