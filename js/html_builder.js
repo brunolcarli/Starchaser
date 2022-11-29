@@ -2,7 +2,6 @@ function get_section_card(title, description, section_id){
     var html = `<a href="pages/section.html?section=${section_id}">`;
     html += `<div class="card text-white bg-secondary mb-3"><h5 class="card-header">${title}</h5>`;
     html += `<div class="card-body">`;
-    // html += `<h5 class="card-title">${title}</h5>`;
     html += `<p class="card-text">${description}</p></div></div></a><hr />`;
 
     return html;
@@ -21,7 +20,6 @@ function get_thread_card(thread_data){
     var html = `<a href="thread.html?thread=${thread_data['id']}"><div class="card text-white bg-secondary mb-3">`;
     html += '<div class="row g-0"><div class="col-md-4">';
     html += `<img src="..." class="img-fluid rounded-start" alt="..."></div>`;
-    // html += `<br /><small>Created by: ${creator} on ${thread_data["openDate"]}</small></div></div>`;
     html += '<div class="col-md-8"><div class="card-body">';
     html += `<h5 class="card-title">${thread_data["title"]}</h5></a>`;
     html += `<p class="card-text">${thread_data["content"].slice(0, 150)}...</p>`;
