@@ -79,3 +79,16 @@ function get_section_data(section_id){
     });
 }
 
+
+function get_thread_data(thread_id){
+    const payload = `{"query": "query { thread(id: ${thread_id}){ id title content createdBy {id username} openDate posts {user {id username} content datetime} } }"}`;
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['thread'];
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}

@@ -76,9 +76,28 @@ function resolve_section(){
 
         // otherwise, list this section threads
         for (let i in  threads){
-            console.log(threads[i]);
             threads_div.innerHTML += get_thread_card(threads[i]);
         }
     });
+}
 
+
+function resolve_thread(){
+    var thread_id = get_url_path_param('thread=');
+    get_thread_data(thread_id).then(thread_data => {
+        var thread_div = document.getElementById('THREAD_NAME');
+        thread_div.innerHTML = '';
+
+        var posts_div = document.getElementById('POSTS');
+        posts_div.innerHTML = '<hr />';
+        var posts = thread_data['posts'];
+
+        // Adds thread title
+        thread_div.innerHTML += build_thread_content_container(thread_data);
+
+        for (let i in  posts){
+            posts_div.innerHTML += get_post_card(posts[i]);
+        }
+
+    });
 }
