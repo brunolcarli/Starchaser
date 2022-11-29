@@ -58,9 +58,27 @@ function resolve_section(){
         var section_div = document.getElementById('SECTION_NAME');
         section_div.innerHTML = '';
 
+        var threads_div = document.getElementById('THREADS');
+        threads_div.innerHTML = '<hr />';
+        var threads = section_data['threads'];
+
         // Adds section title
         section_div.innerHTML += build_title_container(section_data['name']);
         section_div.innerHTML += build_caption_container(section_data['description']);
+
+        // If no threads are open, inform that the section has no threads
+        if (!threads.length){
+            threads_div.innerHTML = build_title_container(
+                "This section has no threads yet..."
+            );
+            return;
+        }
+
+        // otherwise, list this section threads
+        for (let i in  threads){
+            console.log(threads[i]);
+            threads_div.innerHTML += get_thread_card(threads[i]);
+        }
     });
 
 }

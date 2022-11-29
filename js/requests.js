@@ -67,7 +67,7 @@ function get_forum_sections(){
 
 
 function get_section_data(section_id){
-    const payload = `{"query": "query { section(id: ${section_id}){ name description threads { id title createdBy{ username } openDate lastPostDatetime closed  } } }"}`;
+    const payload = `{"query": "query { section(id: ${section_id}){ name description threads { id title content createdBy{ id username } openDate lastPostDatetime closed  } } }"}`;
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
