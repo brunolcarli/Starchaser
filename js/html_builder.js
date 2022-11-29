@@ -22,7 +22,7 @@ function get_thread_card(thread_data){
 
     var html = `<a href="thread.html?thread=${thread_data['id']}"><div class="card text-white bg-secondary mb-3">`;
     html += '<div class="row g-0"><div class="col-md-4">';
-    html += `<img src="${avatar}" class="img-fluid rounded-start"></div>`;
+    html += `<img src="${avatar}" class="img-thumbnail rounded-start" style="max-width: 100px;"></div>`;
     html += '<div class="col-md-8"><div class="card-body">';
     html += `<h5 class="card-title">${thread_data["title"]}</h5></a>`;
     html += `<p class="card-text">${thread_data["content"].slice(0, 150)}...</p>`;
@@ -108,12 +108,13 @@ function build_thread_content_container(thread_data){
     build_thread_reply_modal(thread_data['id']);
     var thread_creator = thread_data['createdBy'];
     var creator = `<a href="users.html?user=${thread_creator['id']}">${thread_creator['username']}</a>`;
+    var content = markdown.toHTML(thread_data['content'].replaceAll('<br />', '\n'));
     return `
     <div class="card bg-secondary mb-3">
         <h5 class="card-header">${thread_data['title']}</h5>
         <div class="card-body">
             <h5 class="card-title">By: ${creator}</h5>
-            <p class="card-text">${thread_data['content']}</p>
+            <p class="card-text">${content}</p>
             <p class="card-text"><small class="text-white">${thread_data["openDate"]}</small></p>
             <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ThreadReplyModal">Reply</button>
         </div>
