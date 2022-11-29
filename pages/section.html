@@ -30,10 +30,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Owner code -->
-    <script src="js/html_builder.js"></script>
-    <script src="js/requests.js"></script>
-    <script src="js/resolvers.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="../js/html_builder.js"></script>
+    <script src="../js/requests.js"></script>
+    <script src="../js/resolvers.js"></script>
+    <script src="../js/auth.js"></script>
     
 
     <!-- css -->
@@ -52,7 +52,7 @@
 
     <title>Starchaser Forum</title>
   </head>
-  <body style="background-color: rgba(16, 14, 14, 0.466)" onload="resolve_forum_sections()">
+  <body style="background-color: rgba(16, 14, 14, 0.466)" onload="resolve_section()">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -69,12 +69,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" href="index.html"
-            >Home<span class="sr-only">(current)</span></a
-          >
-          <a class="nav-link" href="pages/users.html">Users</a>
-          <a class="nav-link" href="pages/signup.html">SignUp</a>
-          <a class="nav-link" href="pages/support.html">Support</a>
+          <a class="nav-link" href="../index.html">Home</a>
+          <a class="nav-link" href="users.html">Users</a>
+          <a class="nav-link" href="signup.html">SignUp</a>
+          <a class="nav-link" href="support.html">Support</a>
         </div>
       </div>
       <!-- LOGIN MODAL -->
@@ -120,23 +118,12 @@
     </nav>
     <!-- title -->
     <section class="bg-dark py-4">
-      <h3 class="text-light" style="text-align: center; margin-bottom: 0">
-        Starchaser Forum    
+      <h3 id="SECTION_NAME" class="text-light" style="text-align: center; margin-bottom: 0">
       </h3>
+      <hr class="m-0" />
     </section>
 
-    <hr />
-    
-    <section class="bg-dark py-1">
-        <h4 class="text-light" style="text-align: center; margin-bottom: 0">
-            Sections
-        </h4>
-    </section>
-
-    <hr />
-
-    <!-- LISTS ALL SECTION TOPICS -->
-    <div id="SECTIONS"></div>
+    <div id="SECTION_THREADS"></div>
 
   </body>
   <footer align="center">Starchaser version: 0.0.0</footer>

@@ -64,3 +64,18 @@ function get_forum_sections(){
         console.error(err);
     });
 }
+
+
+function get_section_data(section_id){
+    const payload = `{"query": "query { section(id: ${section_id}){ name description threads { id title createdBy{ username } openDate lastPostDatetime closed  } } }"}`;
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['section'];
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
+
