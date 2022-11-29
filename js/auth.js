@@ -17,7 +17,6 @@ function is_logged(){
     refresh_user_token(user_data['token']).then(response => {
         refresh_session(user_data['username'], response['token']);
     });
-    resolve_send_player_fleet_player_selection();
 }
 
 
@@ -34,6 +33,5 @@ function log_in(){
         }
         refresh_session(username, token);
         alert(`Authenticated for user ${username}`);
-        window.location.href = 'index.html';
     });
 }

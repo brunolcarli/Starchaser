@@ -101,3 +101,44 @@ function resolve_thread(){
 
     });
 }
+
+
+function sanitize_text_input(text){
+    // If text contain newlines, should onvert to html format (Graphql issues)
+    text = text.replaceAll('\n', '<br />');
+    
+    // If text contain doublequotes, should switch to single quote (Graphql issues)
+    text = text.replaceAll('"', "'");
+
+    return text;
+}
+
+
+function resolve_thread_reply(){
+    var content = document.getElementById('ThreadReplyPostContent').value;
+    var modal = document.getElementById('ThreadReplyModal');
+    if (!content.trim()){
+        alert('Content is required!');
+        modal.click('Cancel');
+        return;
+    }
+    var thread_id = modal.getAttribute('thread_id');
+    var credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));
+    refresh_user_token(credentials['token']).then(response => {
+        refresh_session(credentials['username'], response['token']);
+        credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));
+        var authorization = `Bearer ${credentials['token']}`;
+        var input_data = ` { content: \\\"${sanitize_text_input(content)}\\\" `;
+        input_data += `threadId: \\\"${thread_id}\\\" `;
+        input_data += `username: \\\"${credentials['username']}\\\" }`;
+        create_post_mutation(input_data, authorization).then(response => {
+            console.log(response);
+            if (!response){
+                alert('Server request failed!');
+                modal.click('Cancel');
+                return;
+            }
+            window.location.href = location;
+        });
+    });
+}

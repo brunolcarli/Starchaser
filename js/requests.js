@@ -129,3 +129,27 @@ function refresh_user_token(token){
       console.error(err);
     });
 }
+
+
+///////////////////////////////////
+//
+//     Mutations
+//
+///////////////////////////////////
+
+
+function create_post_mutation(input_data, authorization){
+    const query = `createPost(input: ${input_data})`;
+    const payload = '{"query": "mutation{' + query + '{ post {id} }}"}';
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = authorization;
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        return response['data']['createPost']['post'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}

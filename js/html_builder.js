@@ -37,12 +37,18 @@ function get_thread_card(thread_data){
 function get_post_card(post_data){
     var post_creator = post_data['user'];
     var creator = `<a href="users.html?user=${post_creator['id']}">${post_creator['username']}</a>`;
+    var avatar = post_creator['avatar'];
+    if (!avatar){
+        avatar = 'https://www.baxterip.com.au/wp-content/uploads/2019/02/anonymous.jpg';
+    }
+
+    var content = markdown.toHTML(post_data['content'].replaceAll('<br />', '\n'));
 
     var html = `<div class="card text-white bg-secondary mb-3">`;
-    html += '<div class="row g-0"><div class="col-md-4">';
-    html += `<img src="..." class="img-fluid rounded-start" alt="..."></div>`;
+    html += '<div class="row g-0"><div class="col-md-2">';
+    html += `<img src="${avatar}" class="img-thumbnail rounded-start" style="max-width: 100px;"></div>`;
     html += '<div class="col-md-8"><div class="card-body">';
-    html += `<p class="card-text">${post_data["content"]}</p>`;
+    html += `<p class="card-text">${content}</p>`;
     html += `<p class="card-text"><small class="text-white">Created by: ${creator} on ${post_data["datetime"]}`;
     html += '</small></p></div></div></div></div><hr />';
 
@@ -72,7 +78,34 @@ function build_caption_container(text){
 }
 
 
+function build_thread_reply_modal(thread_id){
+    var modal_html = document.getElementById('THREAD_REPLY');
+    modal_html.innerHTML = `
+    <div class="modal fade" id="ThreadReplyModal" thread_id="${thread_id}" tabindex="-1" role="dialog" aria-labelledby="ThreadReplyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="ThreadReplyModalLabel">Post reply</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="ThreadReplyPostContent" rows="5"></textarea>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-dark" onclick="resolve_thread_reply()">Confirm</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    `
+}
+
+
 function build_thread_content_container(thread_data){
+    build_thread_reply_modal(thread_data['id']);
     var thread_creator = thread_data['createdBy'];
     var creator = `<a href="users.html?user=${thread_creator['id']}">${thread_creator['username']}</a>`;
     return `
@@ -82,7 +115,7 @@ function build_thread_content_container(thread_data){
             <h5 class="card-title">By: ${creator}</h5>
             <p class="card-text">${thread_data['content']}</p>
             <p class="card-text"><small class="text-white">${thread_data["openDate"]}</small></p>
-            <a class="btn btn-dark">Reply</a>
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ThreadReplyModal">Reply</button>
         </div>
     </div> 
     `;
