@@ -115,6 +115,12 @@ function sanitize_text_input(text){
 
 
 function resolve_thread_reply(){
+    var credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));    
+    if (!credentials){
+        alert('Log to reply!');
+        return;
+    }
+
     var content = document.getElementById('ThreadReplyPostContent').value;
     var modal = document.getElementById('ThreadReplyModal');
     if (!content.trim()){
@@ -123,7 +129,7 @@ function resolve_thread_reply(){
         return;
     }
     var thread_id = modal.getAttribute('thread_id');
-    var credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));
+
     refresh_user_token(credentials['token']).then(response => {
         refresh_session(credentials['username'], response['token']);
         credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));
