@@ -187,3 +187,16 @@ function resolve_user_signup(){
        return;
     });
 }
+
+
+function resolve_users_list(){
+    get_users().then(response => {
+        let users_listing = document.getElementById('USERS_LISTING');
+        let card = '';
+        for (let i in response){
+            
+            card += get_user_card(response[i]);
+        }
+        users_listing.innerHTML = card;
+    });
+}

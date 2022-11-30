@@ -30,10 +30,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- Owner code -->
+    <script src="../js/html_builder.js"></script>
     <script src="../js/requests.js"></script>
     <script src="../js/resolvers.js"></script>
     <script src="../js/auth.js"></script>
-    
 
     <!-- css -->
     <style>
@@ -51,7 +51,7 @@
 
     <title>Starchaser Forum</title>
   </head>
-  <body style="background-color: rgba(16, 14, 14, 0.466)">
+  <body style="background-color: rgba(16, 14, 14, 0.466)" onload="resolve_users_list()">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -115,8 +115,6 @@
           }
       </script>
     </nav>
-    <h1 align="center">Starchaser</h1>
-    <!-- <img src="https://i.ibb.co/SXH2zV6/space-combat-scifi-1669603687901.jpg" align="center" width="100%" height="auto"> -->
 
     <!-- title -->
     <section class="bg-dark py-4">
@@ -126,8 +124,7 @@
       <hr class="m-0" />
     </section>
 
-    <h3>Sorry, this page is under development</h3>
-    <p>Have a beer while the developer works on it :)</p>
+    <div id="USERS_LISTING"></div>
 
   </body>
   <footer align="center">Starchaser version: 0.0.0</footer>

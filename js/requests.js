@@ -171,3 +171,17 @@ function create_user_mutation(input_data){
       return err;
     });
 }
+
+
+function get_users(){
+    const payload = '{"query": "query{ users { id username avatar bio } }"}';
+    var options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['users'];
+    })
+    .catch(err => {
+      return err;
+    });
+}

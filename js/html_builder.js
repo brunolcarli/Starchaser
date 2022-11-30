@@ -8,6 +8,27 @@ function get_section_card(title, description, section_id){
 }
 
 
+function get_user_card(user_data){
+    var user_id = user_data['id'];
+    var username = user_data['username'];
+    var user_href = `<a href="users.html?user=${user_id}">${username}</a>`;
+    var avatar = user_data['avatar'];
+    var bio = user_data['bio'];
+    if (!avatar){
+        avatar = 'https://www.baxterip.com.au/wp-content/uploads/2019/02/anonymous.jpg';
+    }
+
+    var html = `<div class="card text-white bg-secondary mb-3">`;
+    html += '<div class="row g-0"><div class="col-md-2">';
+    html += `<img src="${avatar}" class="img-thumbnail rounded-start" style="max-width: 100px;"></div>`;
+    html += `<div class="col-md-8"><h5 class="card-header">${user_href}</h5>`;
+    html += `<div class="card-body"><p class="card-text">${bio}</p>`;
+    html += '</div></div></div></div><hr />';
+
+    return html;
+}
+
+
 function get_thread_card(thread_data){
     var thread_creator = thread_data['createdBy'];
     var creator = `<a href="users.html?user=${thread_creator['id']}">${thread_creator['username']}</a>`;
