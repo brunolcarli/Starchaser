@@ -9,7 +9,7 @@ function refresh_session(username, token){
 function is_logged(){
     var user_data = JSON.parse(localStorage.getItem('USER_TOKEN'));
     if (!user_data){
-        alert('Session expired!');
+        alert('Session expired or not logged!');
         localStorage.clear();
         window.location.href = '../index.html';
         return

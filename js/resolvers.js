@@ -142,3 +142,48 @@ function resolve_thread_reply(){
         });
     });
 }
+
+
+function resolve_user_signup(){
+    var email = document.getElementById('SignUpInputEmail').value;
+    var username = document.getElementById('SignUpInputUsername').value;
+    var password = document.getElementById('SignUpInputPassword').value;
+    var bio = document.getElementById('SignUpInputBio').value;
+    var avatar = document.getElementById('SignUpInputAvatar').value;
+
+    if (!email.trim() || !username.trim() || !password.trim()){
+        alert('Missing required fields.');
+        return;
+    }
+    if (avatar.trim()) {
+        if (!avatar.startsWith('https://') && !avatar.startsWith('http://')){
+            alert('Avatar must be a link address to a picture.');
+            return;
+        }
+    }
+
+    if (!bio.trim()){
+        bio = '...';
+    }
+
+    // build input payload
+    var input_data = ` { username: \\\"${username}\\\" `;
+    input_data += ` email: \\\"${email}\\\" `;
+    input_data += ` password: \\\"${password}\\\" `;
+    input_data += ` bio: \\\"${bio}\\\" `;
+    if (avatar.trim()){
+        input_data += ` avatar: \\\"${avatar}\\\" }`;
+    } else {
+        input_data += ' } ';
+    }
+
+    create_user_mutation(input_data).then(response => {
+       if ('errors' in response){
+        alert(response['errors'][0]['message']);
+        return;
+       }
+       alert('Registered!');
+       window.location.href = '../index.html';
+       return;
+    });
+}

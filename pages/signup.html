@@ -29,7 +29,11 @@
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!-- markdown parser -->
+    <script src="../js/markdown.js"></script>
+    
     <!-- Owner code -->
+    <script src="../js/html_builder.js"></script>
     <script src="../js/requests.js"></script>
     <script src="../js/resolvers.js"></script>
     <script src="../js/auth.js"></script>
@@ -115,8 +119,6 @@
           }
       </script>
     </nav>
-    <h1 align="center">Starchaser</h1>
-    <!-- <img src="https://i.ibb.co/SXH2zV6/space-combat-scifi-1669603687901.jpg" align="center" width="100%" height="auto"> -->
 
     <!-- title -->
     <section class="bg-dark py-4">
@@ -126,8 +128,34 @@
       <hr class="m-0" />
     </section>
 
-    <h3>Sorry, this page is under development</h3>
-    <p>Have a beer while the developer works on it :)</p>
+    <!-- User form -->
+    <section class="p-3 mb-2 bg-light text-dark">
+
+        <div class="form-group">
+          <label for="SignUpInputEmail">Email address</label>
+          <input type="email" class="form-control" id="SignUpInputEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="SignUpInputUsername">Username</label>
+          <input type="text" class="form-control" id="SignUpInputUsername" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+          <label for="SignUpInputPassword">Password</label>
+          <input type="password" class="form-control" id="SignUpInputPassword" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+          <label for="SignUpInputBio">Bio (Optional)</label>
+          <textarea class="form-control" id="SignUpInputBio" rows="5" placeholder="Bio"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="SignUpInputAvatar">Avatar (Optional)</label>
+          <input type="text" class="form-control" id="SignUpInputAvatar" placeholder="image link" aria-describedby="avatarHelp">
+          <small id="avatarHelp" class="form-text text-muted">Paste a image address link to your avatar picture</small>
+        </div>
+        <button onclick="resolve_user_signup()" class="btn btn-dark">Submit</button>
+
+    </section>
 
   </body>
   <footer align="center">Starchaser version: 0.0.0</footer>
