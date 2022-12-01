@@ -1,7 +1,7 @@
 function get_section_card(title, description, section_id){
     var html = `<a href="pages/section.html?section=${section_id}">`;
-    html += `<div class="card text-white bg-secondary mb-3"><h5 class="card-header">${title}</h5>`;
-    html += `<div class="card-body">`;
+    html += `<div class="card text-white bg-info mb-3"><h5 class="card-header">${title}</h5>`;
+    html += `<div class="card-body bg-dark">`;
     html += `<p class="card-text">${description}</p></div></div></a><hr />`;
 
     return html;
