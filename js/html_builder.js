@@ -125,6 +125,33 @@ function build_thread_reply_modal(thread_id){
 }
 
 
+function build_new_thread_modal(section_id){
+    var modal_html = document.getElementById('NEW_THREAD');
+    modal_html.innerHTML = `
+    <div class="modal fade" id="NewThreadModal" section_id="${section_id}" tabindex="-1" role="dialog" aria-labelledby="NewThreadModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="NewThreadModalLabel">New Thread</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="NewThreadContent" rows="5"></textarea>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-dark" onclick="resolve_create_thread()">Confirm</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#NewThreadModal">New Thread</button></div>
+    `;
+}
+
+
 function build_thread_content_container(thread_data){
     build_thread_reply_modal(thread_data['id']);
     var thread_creator = thread_data['createdBy'];

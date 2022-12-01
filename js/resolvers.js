@@ -63,8 +63,10 @@ function resolve_section(){
         var threads = section_data['threads'];
 
         // Adds section title
+        build_new_thread_modal(section_id);
         section_div.innerHTML += build_title_container(section_data['name']);
         section_div.innerHTML += build_caption_container(section_data['description']);
+        // section_div.innerHTML += '<div><button type="button" class="btn btn-dark" data-toggle="modal" data-target="#NewThreadModal">New Thread</button></div>';
 
         // If no threads are open, inform that the section has no threads
         if (!threads.length){
