@@ -112,6 +112,26 @@ function sanitize_text_input(text){
     // If text contain doublequotes, should switch to single quote (Graphql issues)
     text = text.replaceAll('"', "'");
 
+    // Replace common BBCode usd in combat reports
+    text = text.replaceAll('[align=center]', "<div align='center'>");
+    text = text.replaceAll('[/align]', '</div>');
+    text = text.replaceAll('[color=#ff0000]', "<span style='color:#ff0000'>");
+    text = text.replaceAll('[color=#fc850c]', "<span style='color:#fc850c'>");
+    text = text.replaceAll('[color=#008000]', "<span style='color:#008000'>");
+    text = text.replaceAll('[color=#1c84be]', "<span style='color:#1c84be'>");
+    text = text.replaceAll('[color=#3183e7]', "<span style='color:#3183e7'>");
+    text = text.replaceAll('[/color]', "</span>");
+    text = text.replaceAll('[b]', "<b>");
+    text = text.replaceAll('[/b]', "</b>");
+    text = text.replaceAll('[i]', "<i>");
+    text = text.replaceAll('[/i]', "</i>");
+    text = text.replaceAll('[size=14]', "<span style='font-size:14px'>");
+    text = text.replaceAll('[size=16]', "<span style='font-size:16px'>");
+    text = text.replaceAll('[size=10]', "<span style='font-size:10px'>");
+    text = text.replaceAll('[/size]', "</span>");
+    text = text.replaceAll('[url=https://ogotcha.universeview.be/en]', "<a href='https://ogotcha.universeview.be/en'>");
+    text = text.replaceAll('[/url]', "</a>");
+
     return text;
 }
 
@@ -207,4 +227,49 @@ function resolve_users_list(){
         }
         users_listing.innerHTML = card;
     });
+}
+
+
+function resolve_create_thread(){
+    var credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));    
+    if (!credentials){
+        alert('Log to create thread!');
+        return;
+    }
+
+    var title = document.getElementById('NewThreadTitle').value;
+    var content = document.getElementById('NewThreadContent').value;
+    var modal = document.getElementById('NewThreadModal');
+
+    if (!title.trim()){
+        alert('Title is required!');
+        modal.click('Cancel');
+        return;
+    }
+
+    if (!content.trim()){
+        alert('Content is required!');
+        modal.click('Cancel');
+        return;
+    }
+    var section_id = modal.getAttribute('section_id');
+    refresh_user_token(credentials['token']).then(response => {
+        refresh_session(credentials['username'], response['token']);
+        credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));
+        var authorization = `Bearer ${credentials['token']}`;
+        var input_data = ` { content: \\\"${sanitize_text_input(content)}\\\" `;
+        input_data += `title: \\\"${title}\\\" `;
+        input_data += `sectionId: \\\"${section_id}\\\" `;
+        input_data += `username: \\\"${credentials['username']}\\\" }`;
+        create_thread_mutation(input_data, authorization).then(response => {
+            console.log(response);
+            if ('errors' in response){
+                alert(response['errors'][0]['message']);
+                modal.click('Cancel');
+                return;
+            }
+            
+            window.location.href = location;
+        });
+    });   
 }

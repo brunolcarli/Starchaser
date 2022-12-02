@@ -155,6 +155,26 @@ function create_post_mutation(input_data, authorization){
 }
 
 
+function create_thread_mutation(input_data, authorization){
+    const query = `createThread(input: ${input_data})`;
+    const payload = '{"query": "mutation{' + query + '{ thread {id} }}"}';
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = authorization;
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        if ('errors' in response){
+            return response;
+        }
+        return response['data']['createThread']['thread'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+
 function create_user_mutation(input_data){
     const query = `createUser(input: ${input_data})`;
     const payload = '{"query": "mutation{' + query + '{ user {username} }}"}';

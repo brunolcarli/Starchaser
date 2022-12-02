@@ -138,7 +138,10 @@ function build_new_thread_modal(section_id){
             </button>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" id="NewThreadContent" rows="5"></textarea>
+                <input type="text" class="form-control" id="NewThreadTitle" placeholder="Title" required></text>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="NewThreadContent" rows="5" placeholder="Content..." required></textarea>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -156,16 +159,17 @@ function build_thread_content_container(thread_data){
     build_thread_reply_modal(thread_data['id']);
     var thread_creator = thread_data['createdBy'];
     var creator = `<a href="users.html?user=${thread_creator['id']}">${thread_creator['username']}</a>`;
-    var content = markdown.toHTML(thread_data['content'].replaceAll('<br />', '\n'));
+    var content = thread_data['content'].replaceAll("'", '"');
+
     return `
     <div class="card bg-secondary mb-3">
         <h5 class="card-header">${thread_data['title']}</h5>
-        <div class="card-body">
+        <div class="card-body bg-dark mb-3 text-white">
             <h5 class="card-title">By: ${creator}</h5>
-            <p class="card-text">${content}</p>
+            <p class="card-text" id="thread_content_view">${content}</p>
             <p class="card-text"><small class="text-white">${thread_data["openDate"]}</small></p>
             <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ThreadReplyModal">Reply</button>
         </div>
-    </div> 
+    </div>
     `;
 }
