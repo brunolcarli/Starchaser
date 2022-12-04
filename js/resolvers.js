@@ -18,12 +18,11 @@ function resolve_forum_sections(){
 function get_url_path_param(param_name){
     // Get current URL path
     var curr_path = location['href'];
-
     // Check if param was informed
     if (!curr_path.includes(param_name)){
         // Redirect to homepage if param was not given
         alert('Invalid param!');
-        window.location.href = '../index.html';
+        // window.location.href = '../index.html';
         return;
     }
 
@@ -105,6 +104,7 @@ function resolve_thread(){
 }
 
 
+// TODO: this could be a util module tool
 function sanitize_text_input(text){
     // If text contain newlines, should onvert to html format (Graphql issues)
     text = text.replaceAll('\n', '<br />');
@@ -171,7 +171,7 @@ function resolve_thread_reply(){
     });
 }
 
-
+// User resolvers
 function resolve_user_signup(){
     var email = document.getElementById('SignUpInputEmail').value;
     var username = document.getElementById('SignUpInputUsername').value;
@@ -218,11 +218,19 @@ function resolve_user_signup(){
 
 
 function resolve_users_list(){
+    var curr_path = location['href'];
+    if (curr_path.includes('user=')){
+        var user_id = get_url_path_param('user=');
+        if (user_id){
+            resolve_user(user_id);
+            return;
+        }
+    }
+
     get_users().then(response => {
         let users_listing = document.getElementById('USERS_LISTING');
         let card = '';
         for (let i in response){
-            
             card += get_user_card(response[i]);
         }
         users_listing.innerHTML = card;
@@ -230,6 +238,22 @@ function resolve_users_list(){
 }
 
 
+function resolve_user(user_id){
+    var user_div = document.getElementById('USER_VIEW');
+    user_div.innerHTML = '';
+    get_user_data(user_id).then(user_data => {
+        if (!user_data){
+            alert('Invalid page request!');
+            window.location.href = '../index.html';
+            return;
+        }
+        var user_html = build_user_view_container(user_data);
+        user_div.innerHTML = user_html;
+    });
+}
+
+
+//
 function resolve_create_thread(){
     var credentials = JSON.parse(localStorage.getItem('USER_TOKEN'));    
     if (!credentials){

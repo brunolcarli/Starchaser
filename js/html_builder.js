@@ -173,3 +173,29 @@ function build_thread_content_container(thread_data){
     </div>
     `;
 }
+
+
+function build_user_view_container(user_data){
+    var avatar = user_data['avatar'];
+    if (!avatar){
+        avatar = 'https://www.baxterip.com.au/wp-content/uploads/2019/02/anonymous.jpg';
+    }
+    var badge = '';
+    if (user_data['isSuperuser'] == true){
+        badge = '<span class="badge rounded-pill bg-success">Admin</span>';
+    }
+    var join_date = new Date(user_data["dateJoined"]).toLocaleString().replace(' ', '<br />');
+    var html = `<div class="card text-white bg-secondary mb-3">`;
+    html += '<div class="row g-0"><div class="col-md-2">';
+    html += `<img src="${avatar}" class="img-thumbnail rounded-start" style="max-width: 100px;">`;
+    html += `<br />${badge}<br /><br />`;
+    html += `<p class="card-text"><small class="text-white">Joined:<br /> ${join_date}</small></p></div>`;
+    html += `<div class="col-md-8"><h5 class="card-header">${user_data["username"]}</h5>`;
+    html += `<div class="card-body"><p class="card-text">${user_data["bio"]}</p>`;
+    html += `<p class="card-text">Posts: ${user_data["postsCount"]}<br />`;
+    html += `Threads opened: ${user_data["threadsCount"]}</p>`;
+    html += `<p class="card-text"><small class="text-white">Last activity: ${user_data["lastActivity"]}</small></p>`;
+    html += '</div></div></div></div><hr />';
+
+    return html;
+}

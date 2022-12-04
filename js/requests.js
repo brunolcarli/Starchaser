@@ -94,6 +94,33 @@ function get_thread_data(thread_id){
 }
 
 
+function get_users(){
+    const payload = '{"query": "query{ users { id username avatar bio } }"}';
+    var options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['users'];
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+
+function get_user_data(user_id){
+    const payload = `{"query": "query {user(id:\\\"${user_id}\\\"){id username bio avatar dateJoined postsCount threadsCount lastActivity isBanned isSuperuser}}"}`;
+    var options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['user'];
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
 
 ///////////////////////////////////
 //
@@ -186,20 +213,6 @@ function create_user_mutation(input_data){
             return response;
         }
         return response['data']['createUser']['user'];
-    })
-    .catch(err => {
-      return err;
-    });
-}
-
-
-function get_users(){
-    const payload = '{"query": "query{ users { id username avatar bio } }"}';
-    var options = get_request_options(payload);
-    return fetch(URL, options)
-    .then(json)
-    .then(response => {
-        return response['data']['users'];
     })
     .catch(err => {
       return err;
